@@ -6,11 +6,11 @@ import (
 	"log"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/tmc/graphql"
-	"github.com/tmc/graphql/executor/resolver"
-	"github.com/tmc/graphql/executor/tracer"
-	"github.com/tmc/graphql/schema"
-	"github.com/tmc/parse"
+	"github.com/tallstreet/graphql"
+	"github.com/tallstreet/graphql/executor/resolver"
+	"github.com/tallstreet/graphql/executor/tracer"
+	"github.com/tallstreet/graphql/schema"
+	"github.com/tallstreet/parse"
 	"golang.org/x/net/context"
 )
 
@@ -50,6 +50,17 @@ func (p *ParseClass) GraphQLTypeInfo() schema.GraphQLTypeInfo {
 		},
 	}
 
+	ti.Fields["id"] = &schema.GraphQLFieldSpec{
+		Name:        "id",
+		Description: fmt.Sprintf("Accessor for %s field (%v)", "id", "String"),
+		Func: func(ctx context.Context, r resolver.Resolver, f *graphql.Field) (interface{}, error) {
+			partial, err := p.resolve(ctx, r, f)
+			if err != nil {
+				return nil, err
+			}
+			return r.Resolve(ctx, partial, f)
+		},
+	}
 	// generate basic value accessors
 	for fieldName, fieldSchema := range p.class.Fields {
 		fn := fieldName
@@ -78,6 +89,8 @@ func (p *ParseClass) resolve(ctx context.Context, r resolver.Resolver, field *gr
 		return p.resolveReversePointer(ctx, r, field)
 	} else if fieldInfo.Type == "HookFunction" {
 		return mkHookFieldFunc(p.client, p.schema, p.class.ClassName+"_"+field.Name, p.Data)(ctx, r, field)
+	} else if field.Name == "id" {
+		return p.Data["objectId"], nil
 	} else {
 		return p.Data[field.Name], nil
 	}
@@ -121,7 +134,7 @@ func (p *ParseClass) resolveReversePointer(ctx context.Context, r resolver.Resol
 		return nil, err
 	}
 	fieldName := field.Name[len(fieldInfo.TargetClass)+1:]
-	// TODO(tmc): optimize
+	// TODO(tallstreet): optimize
 	query := []byte(fmt.Sprintf(`{"__type":"Pointer","className":"%s","objectId":"%s"}`,
 		p.class.ClassName,
 		p.Data["objectId"]))
@@ -142,7 +155,7 @@ var specialFieldsSet map[string]bool
 func (p *ParseClass) get(ctx context.Context, r resolver.Resolver, f *graphql.Field) (interface{}, error) {
 	var results []map[string]interface{}
 
-	// TODO(tmc): handle overlap between special fields and user defined fields on a class elegantly
+	// TODO(tallstreet): handle overlap between special fields and user defined fields on a class elegantly
 	whereClause := make(map[string]interface{})
 	for _, a := range f.Arguments {
 		// only populate where clause if the field isn't in out special field list

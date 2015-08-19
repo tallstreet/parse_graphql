@@ -7,11 +7,11 @@ import (
 	"os"
 )
 import (
-	"github.com/tmc/graphql/executor"
-	"github.com/tmc/graphql/handler"
-	"github.com/tmc/graphql/schema"
-	"github.com/tmc/parse"
-	"github.com/tmc/parse_graphql"
+	"github.com/tallstreet/graphql/executor"
+	"github.com/tallstreet/graphql/handler"
+	"github.com/tallstreet/graphql/schema"
+	"github.com/tallstreet/parse"
+	"github.com/tallstreet/parse_graphql"
 )
 
 type ServeOptions struct {

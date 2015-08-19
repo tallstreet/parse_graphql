@@ -1,7 +1,7 @@
 {
   "name": "Parse GraphQL Server",
   "description": "An HTTP server that exposes your parse schema as GraphQL",
-  "respository": "https://github.com/tmc/parse_graphql",
+  "respository": "https://github.com/tallstreet/parse_graphql",
   "env": {
     "PARSE_APPLICATION_ID": {
             "description": "Your Application ID",

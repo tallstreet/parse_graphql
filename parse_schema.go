@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/tmc/graphql"
-	"github.com/tmc/graphql/executor/resolver"
-	"github.com/tmc/graphql/schema"
-	"github.com/tmc/parse"
+	"github.com/tallstreet/graphql"
+	"github.com/tallstreet/graphql/executor/resolver"
+	"github.com/tallstreet/graphql/schema"
+	"github.com/tallstreet/parse"
 	"golang.org/x/net/context"
 )
 
