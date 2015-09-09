@@ -10,7 +10,7 @@ import (
 	"github.com/tallstreet/graphql/executor"
 	"github.com/tallstreet/graphql/handler"
 	"github.com/tallstreet/graphql/schema"
-	"github.com/tallstreet/parse"
+	"github.com/tmc/parse"
 	"github.com/tallstreet/parse_graphql"
 )
 

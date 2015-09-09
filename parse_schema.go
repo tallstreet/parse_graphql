@@ -9,7 +9,7 @@ import (
 	"github.com/tallstreet/graphql"
 	"github.com/tallstreet/graphql/executor/resolver"
 	"github.com/tallstreet/graphql/schema"
-	"github.com/tallstreet/parse"
+	"github.com/tmc/parse"
 	"golang.org/x/net/context"
 )
 
